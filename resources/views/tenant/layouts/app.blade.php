@@ -37,15 +37,15 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            @if (Route::has('main.login'))
+                            @if (Route::has('tenant.login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('main.login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('tenant.login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
-                            @if (Route::has('main.register'))
+                            @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('main.register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('tenant.register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -55,13 +55,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('main.logout') }}"
+                                    <a class="dropdown-item" href="{{ route('tenant.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('main.logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('tenant.logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>

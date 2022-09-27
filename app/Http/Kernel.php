@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\NeedsTenant;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -45,7 +46,7 @@ class Kernel extends HttpKernel
         ],
 
         'tenant' => [
-            \Spatie\Multitenancy\Http\Middleware\NeedsTenant::class,
+            NeedsTenant::class,
             \Spatie\Multitenancy\Http\Middleware\EnsureValidTenantSession::class,
         ]
     ];

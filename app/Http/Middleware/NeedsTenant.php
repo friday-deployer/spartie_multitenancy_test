@@ -1,10 +1,9 @@
 <?php
 
-namespace Spatie\Multitenancy\Http\Middleware;
+namespace App\Http\Middleware;
 
 use Closure;
 use Spatie\Multitenancy\Exceptions\NoCurrentTenant;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantModel;
 use Spatie\Multitenancy\Http\Middleware\NeedsTenant as BaseNeedsTenant;
 
 class NeedsTenant extends BaseNeedsTenant
@@ -21,6 +20,7 @@ class NeedsTenant extends BaseNeedsTenant
 
     public function handleInvalidRequest()
     {
-        throw NoCurrentTenant::make();
+        abort(404);
+        //throw NoCurrentTenant::make();
     }
 }
