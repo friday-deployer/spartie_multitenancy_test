@@ -23,12 +23,15 @@ Route::domain(env('CENTRAL_DOMAIN'))->name('main.')->group(function () {
 
     Auth::routes();
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    Route::group(['prefix' => "admin", 'middleware' => 'auth:web'], function () {
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    });
 });
 
 
 //tenant routes
+
 Route::middleware('tenant')->name('tenant.')->group(function () {
     Route::get('/', function () {
         return view('tenant.welcome');
@@ -50,6 +53,7 @@ Route::middleware('tenant')->name('tenant.')->group(function () {
 
 
 
-
-    Route::get('/home', [App\Http\Controllers\Tenant\HomeController::class, 'index'])->name('home');
+    Route::group(['prefix' => "admin", 'middleware' => 'auth:tenant'], function () {
+        Route::get('/home', [App\Http\Controllers\Tenant\HomeController::class, 'index'])->name('home');
+    });
 });
