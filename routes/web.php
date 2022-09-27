@@ -13,6 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+//main 
+Route::domain(env('CENTRAL_DOMAIN'))->group(function () {
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+});
+
+
+//tenant routes
+Route::middleware('tenant')->group(function () {
+    Route::get('/', function () {
+        return view('tenant.welcome');
+    });
+
+
+    Auth::routes();
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

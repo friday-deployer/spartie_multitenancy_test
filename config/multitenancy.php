@@ -8,7 +8,10 @@ use Spatie\Multitenancy\Actions\ForgetCurrentTenantAction;
 use Spatie\Multitenancy\Actions\MakeQueueTenantAwareAction;
 use Spatie\Multitenancy\Actions\MakeTenantCurrentAction;
 use Spatie\Multitenancy\Actions\MigrateTenantAction;
-use Spatie\Multitenancy\Models\Tenant;
+
+// use Spatie\Multitenancy\Models\Tenant;
+use App\Models\Tenant;
+use Spatie\Multitenancy\TenantFinder\DomainTenantFinder;
 
 return [
     /*
@@ -18,7 +21,7 @@ return [
      * This class should extend `Spatie\Multitenancy\TenantFinder\TenantFinder`
      *
      */
-    'tenant_finder' => null,
+    'tenant_finder' => DomainTenantFinder::class,
 
     /*
      * These fields are used by tenant:artisan command to match one or more tenant
@@ -33,9 +36,9 @@ return [
      * A valid task is any class that implements Spatie\Multitenancy\Tasks\SwitchTenantTask
      */
     'switch_tenant_tasks' => [
-        // \Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
-        // \Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
-        // \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class,
+        \Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
+        \Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
+        \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class,
     ],
 
     /*
@@ -57,12 +60,12 @@ return [
      *
      * Set to `null` to use the default connection.
      */
-    'tenant_database_connection_name' => null,
+    'tenant_database_connection_name' => 'tenant',
 
     /*
      * The connection name to reach the landlord database
      */
-    'landlord_database_connection_name' => null,
+    'landlord_database_connection_name' => 'mysql',
 
     /*
      * This key will be used to bind the current tenant in the container.
