@@ -24,12 +24,16 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             
             if (Auth::guard($guard)->check()) {
-                if ($guard == 'tenant') {
-                    
-                    return route('tenant.home');
+                if ($guard == 'tenant' || in_array('tenant', $request->route()->middleware())) {
+                   
+                    return redirect()->route('tenant.home');
                 }
-                return route('main.home');
+             
+
+                return redirect()->route('main.home');
             }
+
+           
         }
 
         return $next($request);
