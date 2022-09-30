@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Tenant\UploadController;
+use App\Http\Controllers\TenantController;
+use App\Models\Tenant;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//tenancy file hanndle
+
+//file assert path
+Route::get('/t/assets/{path?}', function ($path = null) {
+    Tenant::asset($path);
+})
+    ->where('path', '(.*)')
+    ->name('multitenancy.asset');
 
 
 //main 
@@ -26,6 +38,7 @@ Route::domain(env('CENTRAL_DOMAIN'))->name('main.')->group(function () {
 
     Route::group(['prefix' => "admin", 'middleware' => 'auth:web'], function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::resource('tenant', TenantController::class)->names('tenants');
     });
 });
 
@@ -55,5 +68,11 @@ Route::middleware('tenant')->name('tenant.')->group(function () {
 
     Route::group(['prefix' => "admin", 'middleware' => 'auth:tenant'], function () {
         Route::get('/home', [App\Http\Controllers\Tenant\HomeController::class, 'index'])->name('home');
+
+
+        Route::get('uploads', [UploadController::class, 'uploadview'])->name('uploads');
+        Route::post('upload', [UploadController::class, 'upload'])->name('upload');
     });
 });
+
+

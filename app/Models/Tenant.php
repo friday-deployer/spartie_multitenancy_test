@@ -54,4 +54,18 @@ class Tenant extends BaseTenant
     {
         return   self::$db_prefix . $this->database;
     }
+
+
+
+
+    public static function asset($path = null)
+    {
+        abort_if($path === null, 404);
+
+        try {
+            return response()->file(storage_path("app/public/$path"));
+        } catch (\Throwable $th) {
+            abort(404);
+        }
+    }
 }
