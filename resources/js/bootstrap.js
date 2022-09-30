@@ -1,7 +1,21 @@
 import _ from 'lodash';
 window._ = _;
 
+
+import $ from "jquery";
+
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+})
+
+window.$ = $;
+
 import 'bootstrap';
+
+
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
