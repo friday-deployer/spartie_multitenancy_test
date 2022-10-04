@@ -39,6 +39,7 @@ return [
         \Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
         \Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
         \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class,
+        \App\Tasks\SwitchFilesystemTask::class,
     ],
 
     /*
@@ -115,4 +116,32 @@ return [
     'not_tenant_aware_jobs' => [
         // ...
     ],
+
+
+
+    //files
+  
+    'filesystem' => [
+        /**
+         * Each disk listed in the 'disks' array will be suffixed by the suffix_base, followed by the tenant_id.
+         */
+        'suffix_base' => 'tenant_',
+        'disks' => [
+            'local',
+            'public',
+        ],
+
+
+        'root_override' => [
+            // Disks whose roots should be overriden after storage_path() is suffixed.
+            'local' => '%storage_path%/app/',
+            'public' => '%storage_path%/app/public/',
+        ],
+
+        'suffix_storage_path' => true,
+
+        'asset_helper_tenancy' => false,
+    ],
+
+
 ];
